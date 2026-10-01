@@ -4,13 +4,16 @@
  * 盯的是线上真实踩过的坑——CI 机房 IP 被 Cloudflare 拦时，页面不能退化成「异常 + 无数据」。
  */
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile, mkdtemp, mkdir, readdir, rm } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+import os from 'node:os';
+import path from 'node:path';
 import { mergeSnapshot, meaningful } from './lib/merge.mjs';
-import { pickPreferred, staleHours, STALE_WARN_HOURS, blankSnapshot, looksFiltered, probeUrl, isHttpsUrl, fetchJson } from './lib/newapi.mjs';
+import { pickPreferred, staleHours, STALE_WARN_HOURS, blankSnapshot, looksFiltered, probeUrl, isHttpsUrl, fetchJson, describeFetchError } from './lib/newapi.mjs';
 import { creditPlan, usd, breakdown, perDay, auditCredits, usdTotals, othersNote } from './lib/credits.mjs';
 import { PANELS, probeSite } from './lib/panels.mjs';
 import { diffSite, diffSnapshots, majorOnly, priceLabel } from './lib/diff.mjs';
-import { appendSample, compact, uptime, byDay, coverage, EMPTY_HISTORY } from './lib/history.mjs';
+import { appendSample, compact, uptime, byDay, coverage, ciBaseline, EMPTY_HISTORY } from './lib/history.mjs';
 import { groupByDay, renderAtom, summarize, icon } from './lib/changelog.mjs';
 import { renderSitePage } from './lib/render-site-page.mjs';
 import { renderComparePage, renderStatusPage, renderChangelogPage, estimateTurns } from './lib/render-aux-pages.mjs';
@@ -702,6 +705,15 @@ const deadProbe = await probeUrl('https://example.test/sign-up', {
   },
 });
 const emptyProbe = await probeUrl(null);
+// undici 的真实形状：外层只有一句 fetch failed，病因在 cause 里（2026-09-25 起 DoCode 新注册链接就是这样）
+const certProbe = await probeUrl('https://example.test/register', {
+  backoffMs: 0,
+  fetchImpl: async () => {
+    const cause = Object.assign(new Error("Hostname/IP does not match certificate's altnames"), { code: 'ERR_TLS_CERT_ALTNAME_INVALID' });
+    throw new TypeError('fetch failed', { cause });
+  },
+});
+const HEALTH_YML = await readFile(new URL('../.github/workflows/health.yml', import.meta.url), 'utf8');
 
 test('连接抖动会重试，第三次通了就算通', () => {
   assert.equal(flakyProbe.status, 200);
@@ -724,6 +736,18 @@ test('真连不上才报 HTTP 0，且把重试次数用完', () => {
 test('没有 URL 就不探测', () => {
   // test() 是同步的，异步断言得在外面 await 好再进来
   assert.equal(emptyProbe, null);
+});
+test('「fetch failed」要带上 err.cause 里的病因：证书对不上和站点挂了得分得清', () => {
+  assert.equal(certProbe.status, 0);
+  assert.equal(certProbe.error, 'fetch failed (ERR_TLS_CERT_ALTNAME_INVALID)');
+  assert.equal(describeFetchError(Object.assign(new Error('aborted'), { name: 'TimeoutError' })), 'timeout');
+  assert.equal(describeFetchError(Object.assign(new Error('aborted'), { name: 'AbortError' })), 'timeout');
+  assert.equal(describeFetchError(new Error('getaddrinfo ENOTFOUND a.test')), 'getaddrinfo ENOTFOUND a.test');
+});
+test('巡检的 `npm run check | tee` 必须带 pipefail，否则失败退出码被 tee 吞掉、永远不报警', () => {
+  const step = HEALTH_YML.split(/\n\s*- name: /).find((s) => s.includes('npm run check'));
+  assert.ok(step, 'health.yml 里找不到跑 npm run check 的那一步');
+  assert.match(step, /set -o pipefail[\s\S]*npm run check[^\n]*\| tee/);
 });
 
 // ──────────────────────────────────────────────────────────────────────
@@ -870,6 +894,50 @@ test('没这个站的历史时不报错，返回空口径', () => {
   assert.deepEqual(coverage(EMPTY_HISTORY), { samples: 0, from: null, to: null, days: 0 });
 });
 
+console.log('ciBaseline：变动日志只认 CI 的观测，本地提交的快照造不出假消息');
+
+// 2026-09-30 的真实经过：本地探测 t.me 失败，Conduit 以 online=false 进了 HEAD 的 live.json，
+// 而 CI 的历史样本里还没有它
+const CONDUIT = { id: 'conduit', name: 'Conduit', credits: { signup: 500, invite: null, dailyCheckin: null } };
+const BASE_SITES = [SITES_FIXTURE[0], CONDUIT];
+const CI_HISTORY = appendSample(EMPTY_HISTORY, { generatedAt: iso(6 * HOUR), sites: [snap()] }).history;
+const LOCAL_HEAD = { generatedAt: iso(6 * HOUR), sites: [snap(), snap({ id: 'conduit', online: false })] };
+const CI_NEXT = { generatedAt: iso(0), sites: [snap(), snap({ id: 'conduit' })] };
+
+test('本地提交进 HEAD 的新站：照记「新收录」并发 Release，不报「恢复在线」', () => {
+  assert.deepEqual(types(diffSnapshots(LOCAL_HEAD, CI_NEXT, BASE_SITES)), ['online'], '修复前：只有一条假的恢复在线');
+  const events = diffSnapshots(ciBaseline(LOCAL_HEAD, CI_HISTORY), CI_NEXT, BASE_SITES);
+  assert.deepEqual(types(events), ['site_added']);
+  assert.equal(events[0].text, '新收录 Conduit：注册送 $500');
+  assert.deepEqual(types(majorOnly(events)), ['site_added']);
+});
+test('本地网络探不到、CI 一直探得到的站（09-23 的 Matrix）：不报掉线也不报恢复', () => {
+  const head = { generatedAt: iso(6 * HOUR), sites: [snap({ online: false })] };
+  const next = { generatedAt: iso(0), sites: [snap()] };
+  assert.deepEqual(types(diffSnapshots(head, next, SITES_FIXTURE)), ['online'], '修复前：假的恢复在线');
+  assert.deepEqual(types(diffSnapshots(ciBaseline(head, CI_HISTORY), next, SITES_FIXTURE)), []);
+});
+test('CI 自己观测到的掉线与恢复照报：换了基线口径，真变化不能被吞', () => {
+  const head = { generatedAt: iso(6 * HOUR), sites: [snap()] };
+  const down = { generatedAt: iso(3 * HOUR), sites: [snap({ online: false })] };
+  assert.deepEqual(types(diffSnapshots(ciBaseline(head, CI_HISTORY), down, SITES_FIXTURE)), ['offline']);
+  // 上一个 CI 样本是掉线，这次探通了 → 报恢复，哪怕 HEAD 里本地快照写的是在线
+  const downHistory = appendSample(CI_HISTORY, down).history;
+  const next = { generatedAt: iso(0), sites: [snap()] };
+  assert.deepEqual(types(diffSnapshots(ciBaseline(head, downHistory), next, SITES_FIXTURE)), ['online']);
+});
+test('内容字段与「移除收录」照旧和 HEAD 快照比，不受基线影响', () => {
+  const head = { generatedAt: iso(6 * HOUR), sites: [snap()] };
+  const invite = { generatedAt: iso(0), sites: [snap({ inviteeBonusUsd: 20 })] };
+  assert.deepEqual(types(diffSnapshots(ciBaseline(head, CI_HISTORY), invite, SITES_FIXTURE)), ['invite_change']);
+  const gone = { generatedAt: iso(0), sites: [] };
+  assert.deepEqual(types(diffSnapshots(ciBaseline(head, CI_HISTORY), gone, SITES_FIXTURE)), ['site_removed']);
+});
+test('还没有任何历史样本（首次运行）时原样比，不把所有站都当成新站', () => {
+  assert.equal(ciBaseline(LOCAL_HEAD, EMPTY_HISTORY), LOCAL_HEAD);
+  assert.equal(ciBaseline(null, CI_HISTORY), null);
+});
+
 console.log('changelog / Atom：订阅出口');
 
 const META = {
@@ -978,6 +1046,28 @@ test('每一页的 JSON-LD 都必须是合法 JSON，且带面包屑', () => {
   }
   const types = jsonLd(pages[0])[0].map((x) => x['@type']);
   assert.deepEqual(types, ['BreadcrumbList', 'FAQPage']);
+});
+const OG_PNG = await readFile(new URL('../docs/assets/og.png', import.meta.url));
+test('每一页都带分享卡片与 favicon：声明了 summary_large_image 就得真给图，图得是 1200×630', () => {
+  const pages = [
+    renderSitePage({ meta: META, site: SITE, snap: FIXED_SNAP, live: LIVE, css: '', history: HIST, siblings: [] }),
+    renderComparePage({ meta: META, sites: [SITE], live: LIVE, css: '' }),
+    renderStatusPage({ meta: META, sites: [SITE], live: LIVE, css: '', history: HIST }),
+    renderChangelogPage({ meta: META, groups: GROUPS, live: LIVE, css: '' }),
+    renderHtml({ meta: META, sites: [SITE], live: LIVE, css: '', groups: GROUPS, history: HIST }),
+  ];
+  const image = `${META.pagesUrl}assets/og.png`;
+  for (const html of pages) {
+    assert.ok(html.includes(`<meta property="og:image" content="${image}">`));
+    assert.ok(html.includes(`<meta name="twitter:image" content="${image}">`));
+    assert.match(html, /<meta property="og:locale" content="zh_CN">/);
+    assert.match(html, /<link rel="icon" href="data:image\/svg\+xml,%3Csvg/);
+  }
+  // PNG 头：8 字节签名 + IHDR，宽高是第 16–23 字节的两个大端 uint32
+  assert.equal(OG_PNG.subarray(1, 4).toString('latin1'), 'PNG');
+  assert.deepEqual([OG_PNG.readUInt32BE(16), OG_PNG.readUInt32BE(20)], [1200, 630]);
+  assert.ok(OG_PNG.length < 300_000, '分享图太大，部分平台（WhatsApp 等）会不显示预览');
+  for (const l of LANGUAGES) assert.match(l.og, /^[a-z]{2}_[A-Z]{2}$/, `${l.id} 的 og:locale 格式不对`);
 });
 test('数据里的 HTML / 引号不许原样进页面（sites.json 是手工维护的，迟早会有尖括号）', () => {
   const evil = { ...SITE, name: '<img src=x onerror=alert(1)>', subtitle: '带"引号"的副标题' };
@@ -1405,6 +1495,8 @@ for (const catalog of TRANSLATIONS) {
   test(`${locale.id}：翻译完整，语言元数据和首页 canonical 独立`, () => {
     validateCatalog(catalog, ENGLISH, CATALOG);
     assert.ok(homepage.includes(`<html lang="${locale.id}">`));
+    assert.ok(homepage.includes(`<meta property="og:locale" content="${locale.og}">`));
+    assert.ok(homepage.includes(`<meta property="og:image" content="${META.pagesUrl}assets/og.png">`));
     assert.ok(homepage.includes(`rel="canonical" href="${META.pagesUrl}${locale.path}"`));
     assert.equal((homepage.match(/<link rel="alternate" hreflang=/g) ?? []).length, 7);
     assert.ok(!/\{(?:providers|count|amount|inviteCode|hours|at)\}/.test(readme + homepage));
@@ -1480,6 +1572,69 @@ for (const catalog of TRANSLATIONS) {
     assert.ok(html.includes('&lt;img'));
     assert.doesNotThrow(() => JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]));
   });
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// 一键配置脚本：写进用户 rc 文件的东西，错一个字就是 Claude Code 连不上
+// ──────────────────────────────────────────────────────────────────────
+
+console.log('quickstart：一键配置脚本');
+
+const QS_SH = await readFile(new URL('./quickstart.sh', import.meta.url), 'utf8');
+const QS_PS1 = await readFile(new URL('./quickstart.ps1', import.meta.url));
+// 在临时 HOME 里真跑一遍 bash 脚本：站名带空格、换站重跑、危险字符的 Key
+const HAS_BASH = !spawnSync('bash', ['--version']).error;
+const QS_HOME = await mkdtemp(path.join(os.tmpdir(), 'acw-quickstart-'));
+await mkdir(path.join(QS_HOME, 'scripts'));
+await mkdir(path.join(QS_HOME, 'data'));
+await writeFile(path.join(QS_HOME, 'scripts', 'quickstart.sh'), QS_SH);
+await writeFile(path.join(QS_HOME, 'data', 'sites.json'), JSON.stringify({ sites: [
+  { id: 'ar', name: 'AgentRouter', subtitle: 'a', endpoints: { anthropic: 'https://ar.example' }, signupUrl: 'https://ar.example/r' },
+  { id: 'kk', name: 'KKtoken AI', subtitle: '站名带空格', endpoints: { anthropic: 'https://kk.example' }, signupUrl: 'https://kk.example/sign-up' },
+] }));
+await writeFile(path.join(QS_HOME, 'data', 'live.json'), JSON.stringify({ sites: [{ id: 'kk', defaults: { claude: 'claude-opus-5' } }] }));
+await writeFile(path.join(QS_HOME, '.zshrc'), 'alias ll="ls -l"\n');
+// LC_ALL 用 UTF-8：「$RC，」那个崩溃只在 UTF-8 locale 下出现，C locale 测不出来
+const runQs = (input) => spawnSync('bash', [path.join(QS_HOME, 'scripts', 'quickstart.sh')], {
+  input, encoding: 'utf8', env: { ...process.env, HOME: QS_HOME, SHELL: '/bin/zsh', LC_ALL: 'en_US.UTF-8' },
+});
+const qsRuns = HAS_BASH
+  ? [runQs('2\nsk-test-1111aaaa\n\ny\n'), runQs('2\nsk-test-2222bbbb\n\ny\n'), runQs('9\n'), runQs('1\nsk-$(touch PWNED)\n\ny\n')]
+  : [];
+const qsRc = HAS_BASH ? await readFile(path.join(QS_HOME, '.zshrc'), 'utf8') : '';
+const qsPwned = HAS_BASH && (await readdir(QS_HOME)).includes('PWNED');
+await rm(QS_HOME, { recursive: true, force: true });
+
+test('quickstart.ps1 带 UTF-8 BOM：Windows PowerShell 5.1 读无 BOM 的脚本按 GBK 解析，中文全乱码', () => {
+  assert.deepEqual([...QS_PS1.subarray(0, 3)], [0xef, 0xbb, 0xbf]);
+});
+test('quickstart.sh 里 $变量 后面不能直接跟中文：bash 3.2 在 UTF-8 下会把半个汉字吃进变量名', () => {
+  assert.deepEqual(QS_SH.split('\n').filter((l) => /\$[A-Za-z_]\w*[^\x00-\x7f]/.test(l)), []);
+});
+if (HAS_BASH) {
+  const [first, second, badIndex, badKey] = qsRuns;
+  test('站名带空格（KKtoken AI）时 Base URL 和模型名不错位，且正常退出', () => {
+    assert.equal(first.status, 0, first.stderr);
+    assert.match(first.stdout, /ANTHROPIC_BASE_URL="https:\/\/kk\.example"/);
+    assert.match(first.stdout, /ANTHROPIC_MODEL="claude-opus-5"/);
+    assert.ok(!first.stdout.includes('sk-test-1111aaaa'), '屏幕上的 Key 要打码');
+  });
+  test('重跑只替换脚本自己写的配置块：不叠出两份，旧 Key 不留在 rc 里，用户自己的配置不动', () => {
+    assert.equal(second.status, 0, second.stderr);
+    assert.equal(qsRc.match(/^# >>> ai-coding-welfare/gm)?.length, 1);
+    assert.ok(qsRc.includes('sk-test-2222bbbb') && !qsRc.includes('sk-test-1111aaaa'));
+    assert.ok(qsRc.startsWith('alias ll="ls -l"\n\n# >>> ai-coding-welfare: KKtoken AI >>>\n'));
+  });
+  test('编号无效直接退出；Key 带 $( ) 这类字符拒绝写入 rc（写进去每开一次终端就执行一次）', () => {
+    assert.notEqual(badIndex.status, 0);
+    assert.match(badIndex.stderr, /编号无效/);
+    assert.notEqual(badKey.status, 0);
+    assert.match(badKey.stdout, /Key 里有空格、引号/);
+    assert.ok(!qsRc.includes('PWNED'), '危险 Key 不能落进 rc 文件');
+    assert.equal(qsPwned, false);
+  });
+} else {
+  console.log('  · 没有 bash，跳过 quickstart.sh 的实跑用例');
 }
 
 console.log(`\n${process.exitCode ? '✘ 有用例失败' : `✔ 全部通过（${passed} 项）`}`);

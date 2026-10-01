@@ -69,12 +69,14 @@
 3. 跑一键脚本，或手抄下面对应站点的环境变量
 
 ```bash
-# 交互式写好 Claude Code 的环境变量（macOS / Linux）
+# 交互式写好 Claude Code 的环境变量（macOS / Linux，需要 Node.js）
+git clone --depth 1 https://github.com/panxunying/ai-coding-welfare.git && cd ai-coding-welfare
 bash scripts/quickstart.sh
 ```
 
 ```powershell
-# Windows PowerShell
+# Windows PowerShell（5.1 不认 &&，两条命令用 ; 隔开）
+git clone --depth 1 https://github.com/panxunying/ai-coding-welfare.git; cd ai-coding-welfare
 powershell -ExecutionPolicy Bypass -File scripts/quickstart.ps1
 ```
 
@@ -1240,7 +1242,7 @@ CI 每 6 小时抓一次各站接口，与上一次快照逐字段比对，目�
 
 最近几条：
 
-- `2026-09-30` 🟢 Conduit 恢复在线
+- `2026-09-30` 🆕 新收录 Conduit：注册送 $500
 - `2026-09-29` ➕ FlushAPI 上线模型：claude-sonnet-5
 - `2026-09-29` ➖ FlushAPI 下线模型：auto、claude-fable-5.1、claude-opus-4-7、claude-opus-4.7 等 10 个
 - `2026-09-24` 🆕 新收录 FlushAPI：每日签到开启；注册 / 邀请 / 签到额度数额站点未公示
@@ -1275,7 +1277,7 @@ CI 每 6 小时抓一次各站接口，与上一次快照逐字段比对，目�
 ```bash
 npm test          # 单测（不联网）
 npm run refresh   # 抓最新数据
-npm run history   # 归档历史 + 生成变动日志
+npm run history   # 归档历史 + 生成变动日志（只在 CI 里写入，本地默认跳过）
 npm run build     # 重新生成 README + docs/
 npm run check     # 校验链接是否还活着
 ```
@@ -1311,7 +1313,7 @@ npm run check     # 校验链接是否还活着
 发现好用的公益站 / 中转站？两种方式：
 
 - 提 [Issue](https://github.com/panxunying/ai-coding-welfare/issues/new?template=new-site.yml) 填个表单：投稿公开可见，本身就是一次推广；符合下方收录标准、特别优质的，我会收录进正文
-- 或者直接 PR：往 `data/sites.json` 加一条，跑 `npm run refresh && npm run build` 后提交
+- 或者直接 PR：往 `data/sites.json` 加一条、五份 `data/locales/*.json` 补上译文，`npm test` 通过后提交；README、`docs/`、`data/live.json` 是生成物，别带进 PR（CI 每 6 小时重写一次，带上必冲突），合并后会自动生成
 
 收录标准：**能免费拿到额度**、注册流程不套娃、站点公开接口可探测。
 

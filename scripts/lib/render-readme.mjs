@@ -342,6 +342,7 @@ export function renderReadme({ meta, sites: allSites, live, groups = [], history
   const extra = othersNote(others);
   const scope = `${usdCount} 个有明确美元额度、且还收新用户的站`;
   const pages = (meta.pagesUrl ?? '').replace(/\/?$/, '/');
+  const repoName = String(meta.repoUrl ?? '').replace(/\/+$/, '').split('/').pop();
 
   const head = [
     `<h1 align="center">${meta.title}</h1>`,
@@ -409,13 +410,16 @@ export function renderReadme({ meta, sites: allSites, live, groups = [], history
     '2. 后台「令牌 / API Keys」新建一个 Key',
     '3. 跑一键脚本，或手抄下面对应站点的环境变量',
     '',
+    // 在 GitHub 上看 README 的人手里没有这个仓库，光写 bash scripts/quickstart.sh 是跑不起来的
     `${F}bash`,
-    '# 交互式写好 Claude Code 的环境变量（macOS / Linux）',
+    '# 交互式写好 Claude Code 的环境变量（macOS / Linux，需要 Node.js）',
+    `git clone --depth 1 ${meta.repoUrl}.git && cd ${repoName}`,
     'bash scripts/quickstart.sh',
     F,
     '',
     `${F}powershell`,
-    '# Windows PowerShell',
+    '# Windows PowerShell（5.1 不认 &&，两条命令用 ; 隔开）',
+    `git clone --depth 1 ${meta.repoUrl}.git; cd ${repoName}`,
     'powershell -ExecutionPolicy Bypass -File scripts/quickstart.ps1',
     F,
     '',
@@ -516,7 +520,7 @@ function tail(meta, sites, live) {
     `${F}bash`,
     'npm test          # 单测（不联网）',
     'npm run refresh   # 抓最新数据',
-    'npm run history   # 归档历史 + 生成变动日志',
+    'npm run history   # 归档历史 + 生成变动日志（只在 CI 里写入，本地默认跳过）',
     'npm run build     # 重新生成 README + docs/',
     'npm run check     # 校验链接是否还活着',
     F,
@@ -558,7 +562,7 @@ function tailFooter(meta, sites) {
     '发现好用的公益站 / 中转站？两种方式：',
     '',
     `- 提 [Issue](${meta.repoUrl}/issues/new?template=new-site.yml) 填个表单：投稿公开可见，本身就是一次推广；符合下方收录标准、特别优质的，我会收录进正文`,
-    '- 或者直接 PR：往 `data/sites.json` 加一条，跑 `npm run refresh && npm run build` 后提交',
+    '- 或者直接 PR：往 `data/sites.json` 加一条、五份 `data/locales/*.json` 补上译文，`npm test` 通过后提交；README、`docs/`、`data/live.json` 是生成物，别带进 PR（CI 每 6 小时重写一次，带上必冲突），合并后会自动生成',
     '',
     '收录标准：**能免费拿到额度**、注册流程不套娃、站点公开接口可探测。',
     '',
