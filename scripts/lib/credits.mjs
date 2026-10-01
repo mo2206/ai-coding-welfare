@@ -23,6 +23,7 @@ const num = (v) => (Number.isFinite(Number(v)) && Number(v) > 0 ? Number(v) : nu
 const UNITS = {
   usd: { prefix: '$', suffix: '' },
   point: { prefix: '', suffix: ' 积分' },
+  tokens: { prefix: '', suffix: ' tokens' },
   // 也有站点用「刀」计价，但那个刀不是美元：New API 面板的 price 字段是充值比例，
   // 本页多数站是 7.3（¥7.3 ≈ $1），DoCode 是 0.02（1 元 = 50 刀），差两个数量级，
   // 扣费时还要再乘站内倍率。把它和美元站加在一起同样是编数字，所以单列一个单位，

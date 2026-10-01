@@ -85,6 +85,11 @@
       "registration": "Den vollständigen Empfehlungslink verwenden und mit GitHub fortfahren. Die Registrierungsseite bewirbt sofortige 100 US-Dollar Guthaben ohne Kreditkarte. Nach der Anmeldung einen API-Schlüssel im Dashboard erstellen.",
       "notes": "Die öffentliche Modellseite führt Opus 5.5 und weitere Modelle mit ihren Preisen auf. Aktuelle Modellpreise beim Anbieter sowie den tatsächlichen Kontostand und Verbrauch im Dashboard prüfen."
     },
+    "omnirush": {
+      "summary": "Kostenloser Zugang zu GPT 6 Astra, GPT 6 Sol und GPT-5.6 Sol mit 50M Tokens pro Woche; über diesen Empfehlungslink gibt es zusätzlich 5M Tokens.",
+      "registration": "Öffne den vollständigen Empfehlungslink zur Konsole, behalte ref=AXJFLFPA bei und folge der Registrierung. Prüfe dein Wochenkontingent und den Empfehlungsbonus in der Konsole.",
+      "notes": "Das Token-Angebot und die Modellliste stammen aus einem Nutzerbeitrag; die tatsächliche Gutschrift wurde nicht in einem angemeldeten Konto geprüft. Teilnahmebedingungen, Zurücksetzung oder Übertrag, Häufigkeit des Bonus und verfügbare Modelle stehen in der Konsole. Tokens werden nicht zu USD-Gesamtsummen addiert."
+    },
     "conduit": {
       "summary": "Die Registrierung über den Conduit-Bot auf Telegram bietet 500 US-Dollar Guthaben sowie Zugang zu GPT-6, Fable 5.1 und weiteren Modellen.",
       "registration": "Öffne den vollständigen Empfehlungslink mit einem Telegram-Konto, drücke Start und folge den Registrierungsanweisungen des Bots. Behalte den Empfehlungsparameter im Link bei.",

@@ -1269,8 +1269,8 @@ test('变动日志保留历史事件，但只给未归档站提供推荐详情�
 });
 const CATALOG = JSON.parse(await readFile(new URL('../data/sites.json', import.meta.url), 'utf8')).sites;
 const MIRASIM = CATALOG.find((s) => s.id === 'mirasim');
-test('ArtBloom 排第一、Conduit 排第二，其余站顺延，三个已确认不可用的站保持归档', () => {
-  assert.deepEqual(activeSites(CATALOG).slice(0, 6).map((s) => s.id), ['artbloom', 'conduit', 'agentrouter', 'docode', 'justdowork', 'mirasim']);
+test('ArtBloom 排第一、OmniRush 排第二，其余站顺延，三个已确认不可用的站保持归档', () => {
+  assert.deepEqual(activeSites(CATALOG).slice(0, 7).map((site) => site.id), ['artbloom', 'omnirush', 'conduit', 'agentrouter', 'docode', 'justdowork', 'mirasim']);
   for (const id of ['gorouter', 'tabitoken', 'rawchat']) assert.equal(isArchived(CATALOG.find((s) => s.id === id)), true);
   assert.equal(new Set(CATALOG.map((s) => s.id)).size, CATALOG.length);
   assert.equal(MIRASIM.signupUrl, 'https://mirasim.ai/r/go-kx9cd5');
@@ -1283,8 +1283,8 @@ test('DoCode 展示与健康检查都使用新注册链接，邀请码保持不�
   assert.deepEqual(DOCODE.endpoints, { anthropic: 'https://docode.cc', openai: 'https://docode.cc/v1' });
 });
 const FLUSHAPI = CATALOG.find((s) => s.id === 'flushapi');
-test('FlushAPI 顺延第七位，邀请链接与公开接口齐全', () => {
-  assert.equal(activeSites(CATALOG)[6].id, 'flushapi');
+test('FlushAPI 顺延第八位，邀请链接与公开接口齐全', () => {
+  assert.equal(activeSites(CATALOG)[7].id, 'flushapi');
   assert.equal(FLUSHAPI.signupUrl, 'https://flushapi.fun/sign-up?aff=WBF3');
   assert.equal(signupProbeUrl(FLUSHAPI), FLUSHAPI.signupUrl);
   assert.equal(FLUSHAPI.statusApi, 'https://flushapi.fun/api/status');
@@ -1506,8 +1506,9 @@ for (const catalog of TRANSLATIONS) {
   });
   test(`${locale.id}：顺序、邀请链接和免费额度总计共用源数据`, () => {
     const ld = JSON.parse(homepage.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
-    assert.equal(ld.itemListElement[1].name, 'Conduit');
-    assert.equal(ld.itemListElement[6].name, 'FlushAPI');
+    assert.equal(ld.itemListElement[1].name, 'OmniRush');
+    assert.equal(ld.itemListElement[2].name, 'Conduit');
+    assert.equal(ld.itemListElement[7].name, 'FlushAPI');
     assert.equal(ld.numberOfItems, activeSites(CATALOG).length);
     assert.ok(readme.includes('$1199.5') && homepage.includes('$1199.5'));
     for (const s of activeSites(CATALOG)) {

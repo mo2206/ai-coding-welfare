@@ -83,6 +83,64 @@
       "community": []
     },
     {
+      "id": "omnirush",
+      "name": "OmniRush",
+      "subtitle": "每周免费 50M tokens · 本页邀请额外 +5M · GPT 6 Astra / GPT 6 Sol / GPT-5.6 Sol",
+      "recommended": false,
+      "panel": "relay",
+      "credits": {
+        "signup": null,
+        "invite": null,
+        "dailyCheckin": null,
+        "approx": false,
+        "unit": "tokens",
+        "note": "每周免费 50M tokens（5000 万），通过本页邀请链接额外 +5M tokens（500 万）；按投稿信息登记，实际到账与适用条件以控制台为准。"
+      },
+      "signupUrl": "https://omnirush.ai/console?ref=AXJFLFPA",
+      "homeUrl": "https://omnirush.ai",
+      "docsUrl": null,
+      "statusApi": "https://omnirush.ai/console",
+      "pricingApi": null,
+      "mirrors": [],
+      "tags": ["免费额度", "每周 50M tokens", "邀请额外 +5M", "GPT 6 Astra", "GPT 6 Sol", "GPT-5.6 Sol"],
+      "highlights": [
+        "每周免费 50M tokens（5000 万）",
+        "通过本页完整邀请链接注册，额外获得 +5M tokens（500 万）",
+        "支持 GPT 6 Astra、GPT 6 Sol、GPT-5.6 Sol，额度与模型信息来自投稿"
+      ],
+      "endpoints": {
+        "anthropic": null,
+        "openai": null
+      },
+      "setup": {
+        "client": "控制台内查看",
+        "note": "登录 OmniRush 控制台后查看可用模型、使用入口和接入说明。",
+        "steps": [
+          "打开本页完整邀请链接，保留 ref=AXJFLFPA，按页面提示注册或登录",
+          "在控制台确认每周 50M tokens 额度与额外 +5M tokens 邀请奖励",
+          "按控制台说明选择模型并使用；如需客户端接入，以后台提供的地址和模型 ID 为准"
+        ],
+        "dashboardUrl": "https://omnirush.ai/console?ref=AXJFLFPA"
+      },
+      "modelsSummary": "GPT 6 Astra / GPT 6 Sol / GPT-5.6 Sol",
+      "modelsNote": "按投稿信息登记：支持 GPT 6 Astra、GPT 6 Sol、GPT-5.6 Sol。当前可用模型及实际调用名称请在控制台确认。",
+      "faq": [
+        ["OmniRush 每周有多少免费额度？", "按投稿信息，每周提供 50M tokens（5000 万）；具体周期、领取方式和适用条件以控制台为准。"],
+        ["如何领取额外 +5M tokens？", "通过 https://omnirush.ai/console?ref=AXJFLFPA 注册，保留邀请参数。按投稿信息可额外获得 5M tokens（500 万），实际到账与奖励规则以控制台为准。"],
+        ["这些 tokens 会计入美元额度合计吗？", "不会。tokens 是用量额度，不能直接换算成美元，也不将每周额度当作每日签到额度。"]
+      ],
+      "register": {
+        "methods": ["官网控制台"],
+        "requirements": [
+          "使用完整邀请链接，保留 ref=AXJFLFPA，并按控制台提示完成注册",
+          "在控制台核对每周额度、邀请奖励和使用条件"
+        ]
+      },
+      "earnMore": ["通过本页邀请链接注册，按投稿信息额外获得 +5M tokens"],
+      "caveats": ["赠额与模型信息来自投稿，未登录验证实际到账；每周额度的累积、重置规则及邀请奖励周期以控制台为准。"],
+      "community": []
+    },
+    {
       "id": "conduit",
       "name": "Conduit",
       "subtitle": "注册赠送 $500 额度 · 支持 GPT-6、Fable 5.1 等模型，Telegram 机器人注册",
