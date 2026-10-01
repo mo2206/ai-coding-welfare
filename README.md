@@ -5,14 +5,15 @@
 <p align="center">免费额度 · 白嫖 Claude Code / Codex / Cursor 的中转与公益站合集</p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/%E6%94%B6%E5%BD%95%E7%AB%99%E7%82%B9-12%20%E4%B8%AA-blue" alt="收录站点">
-  <img src="https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF-12%2F12-brightgreen" alt="在线">
+  <img src="https://img.shields.io/badge/%E6%94%B6%E5%BD%95%E7%AB%99%E7%82%B9-13%20%E4%B8%AA-blue" alt="收录站点">
+  <img src="https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF-13%2F13-brightgreen" alt="在线">
   <img src="https://img.shields.io/badge/%E9%A6%96%E6%97%A5%E5%8F%AF%E5%BE%97-%E6%9C%80%E9%AB%98%20%24500-success" alt="首日可得">
-  <img src="https://img.shields.io/badge/%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0-2026--10--01%2006.19%20UTC-informational" alt="数据更新">
+  <img src="https://img.shields.io/badge/%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0-2026--10--01%2006.33%20UTC-informational" alt="数据更新">
 </p>
 
 <p align="center">
   <a href="https://api.artbloom.tech/signup?ref=PCTM2VCGUI"><b>ArtBloom 注册</b></a> ·
+  <a href="https://omnirush.ai/console?ref=AXJFLFPA"><b>OmniRush 注册</b></a> ·
   <a href="https://t.me/conduitoff_bot?start=ref_8111640723"><b>Conduit 注册</b></a> ·
   <a href="https://agentrouter.org/register?aff=szt3"><b>AgentRouter 注册</b></a> ·
   <a href="https://ai.docode.life/register?aff=zMRe"><b>DoCode 注册</b></a> ·
@@ -40,6 +41,7 @@
 | 站点 | 状态 | 首日可得 / 套餐 | 额度构成 / 用量 | 每日 / 周期 | 兼容协议 | 模型 | 注册 | 邀请码 |
 | :-- | :--: | :--: | :-- | :--: | :--: | :--: | :--: | :--: |
 | **ArtBloom** 🔥 | 🟢 在线 | **$100** | 注册 $100 | — | OpenAI | **支持 Opus 5.5** | [点此注册 →](https://api.artbloom.tech/signup?ref=PCTM2VCGUI) | — |
+| **OmniRush** | 🟢 在线 | 每周免费 50M tokens（5000 万），通过本页邀请链接额外 +5M tokens（500 万）；按投稿信息登记，实际到账与适用条件以控制台为准。 | — | — | 控制台内查看 | **GPT 6 Astra / GPT 6 Sol / GPT-5.6 Sol** | [点此注册 →](https://omnirush.ai/console?ref=AXJFLFPA) | — |
 | **Conduit** | 🟢 在线 | **$500** | 注册 $500 | — | 机器人内查看 | **GPT-6 / Fable 5.1 等** | [点此注册 →](https://t.me/conduitoff_bot?start=ref_8111640723) | — |
 | **AgentRouter** | 🟢 在线 | **$175** | 注册 $100 + 本页邀请 $50 + 首签 $25 | $25/天 | Anthropic + OpenAI | 4 个可查 | [点此注册 →](https://agentrouter.org/register?aff=szt3) | — |
 | **DoCode** | 🟢 在线 | **300 站内刀** | 注册 50 站内刀 + 本页邀请 250 站内刀 | 无签到 | Anthropic + OpenAI | 需登录查看 | [点此注册 →](https://ai.docode.life/register?aff=zMRe) | `zMRe` |
@@ -54,7 +56,7 @@
 
 > **Mirasim Go套餐 $1/月：用量按每 5 小时估算，不是每月总次数。** 官网估算，共享额度按模型折算，各模型次数不可相加；实际用量以站内为准。 付费套餐不计入下方免费额度合计。[官网定价](https://mirasim.ai/pricing)（2026-09-23 核对）。
 
-> 「首日可得」= 注册基础额度 + 本页邀请链接额度 + 当天能领的签到额度（每日重置额度池的站点按一天的池子算）；模型、价格、在线状态由脚本抓取站点公开接口自动生成，最后更新：`2026-10-01 06:19 UTC`。
+> 「首日可得」= 注册基础额度 + 本页邀请链接额度 + 当天能领的签到额度（每日重置额度池的站点按一天的池子算）；模型、价格、在线状态由脚本抓取站点公开接口自动生成，最后更新：`2026-10-01 06:33 UTC`。
 >
 > 「邀请码」列写了码的站（DoCode `zMRe`），注册表单里有一栏要**自己填**，漏填就只拿得到注册基础额度、事后补不上；其余站写 — 表示未登记需要手填的邀请码，邀请奖励与条件请看站点详情。
 >
@@ -102,7 +104,7 @@ powershell -ExecutionPolicy Bypass -File scripts/quickstart.ps1
 
 **实时数据**（自动抓取站点公开接口）
 
-- 接口延迟：861 ms
+- 接口延迟：832 ms
 
 > 2026-09-28 核对公开模型页：Opus 5.5 的模型 ID 为 claude-opus-5-5，输入 $2 / 百万 tokens、输出 $10 / 百万 tokens；另列有 claude-opus-5、DeepSeek-V4-Flash、kimi-k3。通过 OpenAI 兼容的 /v1/chat/completions 调用，完整模型与实时价格见 https://api.artbloom.tech/models。
 
@@ -154,6 +156,53 @@ curl -s https://api.artbloom.tech/v1/chat/completions \
 
 ---
 
+### 🟢 OmniRush
+
+> 每周免费 50M tokens · 本页邀请额外 +5M · GPT 6 Astra / GPT 6 Sol / GPT-5.6 Sol
+
+<a href="https://omnirush.ai/console?ref=AXJFLFPA"><img src="https://img.shields.io/badge/%E7%AB%8B%E5%8D%B3%E6%B3%A8%E5%86%8C-OmniRush-brightgreen?style=for-the-badge" alt="注册 OmniRush"></a>
+
+**为什么值得注册**
+
+- 每周免费 50M tokens（5000 万）
+- 通过本页完整邀请链接注册，额外获得 +5M tokens（500 万）
+- 支持 GPT 6 Astra、GPT 6 Sol、GPT-5.6 Sol，额度与模型信息来自投稿
+
+**能拿多少额度**
+
+- 免费范围：每周免费 50M tokens（5000 万），通过本页邀请链接额外 +5M tokens（500 万）；按投稿信息登记，实际到账与适用条件以控制台为准。
+
+**实时数据**（自动抓取站点公开接口）
+
+- 接口延迟：346 ms
+
+> 按投稿信息登记：支持 GPT 6 Astra、GPT 6 Sol、GPT-5.6 Sol。当前可用模型及实际调用名称请在控制台确认。
+
+**注册要求**
+
+- 使用完整邀请链接，保留 ref=AXJFLFPA，并按控制台提示完成注册
+- 在控制台核对每周额度、邀请奖励和使用条件
+
+**接入配置**
+
+> 登录 OmniRush 控制台后查看可用模型、使用入口和接入说明。
+
+1. 打开本页完整邀请链接，保留 ref=AXJFLFPA，按页面提示注册或登录
+2. 在控制台确认每周 50M tokens 额度与额外 +5M tokens 邀请奖励
+3. 按控制台说明选择模型并使用；如需客户端接入，以后台提供的地址和模型 ID 为准
+
+控制台入口：<https://omnirush.ai/console?ref=AXJFLFPA>
+
+**如何继续拿额度**
+
+- 通过本页邀请链接注册，按投稿信息额外获得 +5M tokens
+
+**⚠️ 使用前必读**
+
+- 赠额与模型信息来自投稿，未登录验证实际到账；每周额度的累积、重置规则及邀请奖励周期以控制台为准。
+
+---
+
 ### 🟢 Conduit
 
 > 注册赠送 $500 额度 · 支持 GPT-6、Fable 5.1 等模型，Telegram 机器人注册
@@ -173,7 +222,7 @@ curl -s https://api.artbloom.tech/v1/chat/completions \
 
 **实时数据**（自动抓取站点公开接口）
 
-- 接口延迟：472 ms
+- 接口延迟：519 ms
 
 > 按投稿信息登记：支持 GPT-6、Fable 5.1 等模型。完整模型清单、实际调用名称与价格请在机器人内查看。
 
@@ -214,12 +263,12 @@ curl -s https://api.artbloom.tech/v1/chat/completions \
 
 **实时数据**（自动抓取站点公开接口）
 
-- ⚠ 接口已连续 183 小时没抓到新数据，下列信息为 `2026-09-23 14:55 UTC` 的快照
+- ⚠ 接口已连续 184 小时没抓到新数据，下列信息为 `2026-09-23 14:55 UTC` 的快照
 - 站点名称：**Agent Router**
 - 面板版本：`init-20260918-cbda758f`
 - 邀请他人可得：**$50**
 - 登录方式：GitHub / LinuxDO
-- 接口延迟：335 ms
+- 接口延迟：330 ms
 
 **镜像 / 备用入口**
 
@@ -357,7 +406,7 @@ curl -s https://agentrouter.org/v1/chat/completions \
 - 每日签到：❌
 - 开放注册：✅
 - 登录方式：账号密码
-- 接口延迟：2618 ms
+- 接口延迟：1018 ms
 
 **镜像 / 备用入口**
 
@@ -487,7 +536,7 @@ curl -s https://docode.cc/v1/chat/completions \
 - 开放注册：✅（站点关掉了邮箱密码注册，得用 GitHub 登录建号（防批量注册的常规做法）。）
 - 登录方式：GitHub / 账号密码
 - GitHub 账号需满 **365 天**
-- 接口延迟：706 ms
+- 接口延迟：669 ms
 
 > 该站模型清单需登录后台查看，注册后在「模型价格」页确认。
 
@@ -602,7 +651,7 @@ curl -s https://api.justwoker.icu/v1/chat/completions \
 
 **实时数据**（自动抓取站点公开接口）
 
-- 接口延迟：753 ms
+- 接口延迟：892 ms
 
 > Go 的 $1/月套餐包含 Kimi K3、GLM 5.3 Flash、DS 4.1 Flash。定价页按每 5 小时给出约 130 / 1,900 / 7,800 次的请求量估算，不是整月只有这些次数。三项共用同一份套餐额度、不能相加，也不是保证次数；本页不外推为每天或每月的固定总量。Claude / Codex 对应的 Basic、Pro、Max 是另列的套餐，不属于 $1 Go 的承诺。
 
@@ -671,7 +720,7 @@ curl -s https://api.justwoker.icu/v1/chat/completions \
 - 每日签到：✅
 - 开放注册：✅（站点关掉了邮箱密码注册，得用 GitHub 登录建号（防批量注册的常规做法）。）
 - 登录方式：GitHub / 账号密码
-- 接口延迟：1360 ms
+- 接口延迟：1427 ms
 
 **当前可用模型**
 
@@ -796,7 +845,7 @@ curl -s https://flushapi.fun/v1/chat/completions \
 - 每日签到：✅
 - 开放注册：✅（站点关掉了邮箱密码注册，得用 GitHub 登录建号（防批量注册的常规做法）。）
 - 登录方式：GitHub / 账号密码
-- 接口延迟：1528 ms
+- 接口延迟：1580 ms
 
 > 该站把价格页设成了登录可见（`/api/pricing` 返回 401），本页不列模型表。站内公示的计价口径是输入 $1 / 百万 tokens、输出 $1 / 百万 tokens，按 token 而不是按次，注册后在控制台「模型价格」页确认实际清单与倍率。
 
@@ -902,7 +951,7 @@ curl -s https://kktoken.cc/v1/chat/completions \
 
 **实时数据**（自动抓取站点公开接口）
 
-- 接口延迟：1900 ms
+- 接口延迟：2055 ms
 
 > 模型清单与价格需登录后在控制台「模型列表」查看（按每百万 Tokens 计价，可按厂商 / 上下文窗口筛选），站点没有公开的模型与定价接口，本页不做承诺。
 
@@ -968,7 +1017,7 @@ curl -s https://kktoken.cc/v1/chat/completions \
 
 **实时数据**（自动抓取站点公开接口）
 
-- 接口延迟：180 ms
+- 接口延迟：164 ms
 
 > 整站（含 `/api/status`、`/api/pricing`、robots.txt 与注册页）都挂在 JS 人机挑战后面，返回的是 `var arg1=...` 的挑战页而不是 JSON，公开接口读不到模型清单，本页不列模型表。站内公示的计价口径是输入 $5 / 百万 tokens、输出 $25 / 百万 tokens，并公示支持 GPT-5.6 Sol，注册后在控制台「模型价格」页确认实际清单与倍率。
 
@@ -1076,7 +1125,7 @@ curl -s https://anyrouter.top/v1/chat/completions \
 
 **实时数据**（自动抓取站点公开接口）
 
-- 接口延迟：3265 ms
+- 接口延迟：2809 ms
 
 > 这个站的面板接口在它自己的 robots.txt 里是 `Disallow: /api`，本页按规矩不碰，所以拿不到模型清单与单价，只探 robots 放行的 `/v1/models`（不带 key 必然回 `API_KEY_REQUIRED`，能回就说明网关活着）。站内公示可以用 GPT-5.6 Sol，完整清单与价格注册后在控制台确认。
 
@@ -1183,7 +1232,7 @@ curl -s https://api.cheapcodex.online/v1/chat/completions \
 
 **实时数据**（自动抓取站点公开接口）
 
-- 接口延迟：3754 ms
+- 接口延迟：3277 ms
 
 > 站点公开面只有落地页和法律条款两类页面（sitemap 里就这几条），模型清单、单价与中转地址都在登录后的「接入文档」里，所以本页既不列模型表也不猜 Base URL。计费单位是站内积分，站点界面把它写成「$5 积分」；据反馈约 5 积分换 7M tokens 左右，并公示可以用 gpt-5.6-sol —— 都以站内实际为准。
 
@@ -1234,7 +1283,7 @@ curl -s https://api.cheapcodex.online/v1/chat/completions \
 
 ## 🔔 额度变了，这里会通知你
 
-CI 每 6 小时抓一次各站接口，与上一次快照逐字段比对，目前已攒下 186 个样本、覆盖约 40.9 天。额度调整、掉线与恢复、模型上下线、价格变动都会自动记一条：
+CI 每 6 小时抓一次各站接口，与上一次快照逐字段比对，目前已攒下 187 个样本、覆盖约 40.9 天。额度调整、掉线与恢复、模型上下线、价格变动都会自动记一条：
 
 - 点仓库右上角 **Watch → Custom → Releases**：有重要变动时 GitHub 直接发邮件
 - 订阅 [Atom feed](https://panxunying.github.io/ai-coding-welfare/feed.xml)：RSS 阅读器 / Feedly / Telegram 机器人都能读
@@ -1242,12 +1291,12 @@ CI 每 6 小时抓一次各站接口，与上一次快照逐字段比对，目�
 
 最近几条：
 
+- `2026-10-01` 🆕 新收录 OmniRush：每周免费 50M tokens（5000 万），通过本页邀请链接额外 +5M tokens（500 万）；按投稿信息登记，实际到账与适用条件以控制台为准。
 - `2026-09-30` 🆕 新收录 Conduit：注册送 $500
 - `2026-09-29` ➕ FlushAPI 上线模型：claude-sonnet-5
 - `2026-09-29` ➖ FlushAPI 下线模型：auto、claude-fable-5.1、claude-opus-4-7、claude-opus-4.7 等 10 个
 - `2026-09-24` 🆕 新收录 FlushAPI：每日签到开启；注册 / 邀请 / 签到额度数额站点未公示
 - `2026-09-23` 🟢 Matrix 恢复在线
-- `2026-09-23` ➖ AgentRouter 下线模型：glm-5.3、gpt-5.6-sol
 
 完整记录见 [CHANGELOG.md](CHANGELOG.md)。
 
