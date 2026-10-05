@@ -1276,8 +1276,11 @@ test('ArtBloom 排第一、OmniRush 排第二，其余站顺延，三个已确�
   assert.equal(MIRASIM.signupUrl, 'https://mirasim.ai/r/go-kx9cd5');
 });
 const DOCODE = CATALOG.find((s) => s.id === 'docode');
-test('DoCode 展示与健康检查都使用新注册链接，邀请码保持不变', () => {
-  assert.equal(DOCODE.signupUrl, 'https://ai.docode.life/register?aff=zMRe');
+// ai.docode.life / ai.docode.pro 和 docode.cc 是同一台服务器，证书却只签了 docode.cc：
+// 2026-09-25 把注册链接换成 ai.docode.life 后，访客点进去就是浏览器证书报错，死链巡检也从此天天 ✖
+test('DoCode 注册链接走证书有效的主域名 docode.cc，展示与健康检查一致，邀请码不变', () => {
+  assert.equal(DOCODE.signupUrl, 'https://docode.cc/register?aff=zMRe');
+  assert.equal(new URL(DOCODE.signupUrl).host, new URL(DOCODE.homeUrl).host);
   assert.equal(signupProbeUrl(DOCODE), DOCODE.signupUrl);
   assert.equal(DOCODE.inviteCode, 'zMRe');
   assert.deepEqual(DOCODE.endpoints, { anthropic: 'https://docode.cc', openai: 'https://docode.cc/v1' });
