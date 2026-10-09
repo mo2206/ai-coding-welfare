@@ -15,7 +15,7 @@ Community gateways, free API credits and low-cost plans for Claude Code, Codex a
 
 A translated guide to the listed services. Amounts, model IDs, prices and referral URLs are generated from the same data as the Chinese edition. Detailed comparison, history, upstream documentation and some service interfaces remain in Chinese.
 
-**Snapshot updated:** 2026-10-08 23:24 UTC
+**Snapshot updated:** 2026-10-09 06:15 UTC
 
 ## Site overview
 
@@ -25,14 +25,14 @@ A translated guide to the listed services. Amounts, model IDs, prices and referr
 | **OmniRush** | Reachable | **Not publicly specified** | Not publicly specified | [Open service / register](https://omnirush.ai/console?ref=AXJFLFPA) |
 | **Conduit** | Reachable | **$500** | Not publicly specified | [Open service / register](https://t.me/conduitoff_bot?start=ref_8111640723) |
 | **AgentRouter** | Reachable | **$175** | $25/day · Daily check-in | [Open service / register](https://agentrouter.org/register?aff=szt3) |
-| **DoCode** | Reachable | **300 site units (not USD)** | No check-in | [Open service / register](https://docode.cc/register?aff=zMRe) |
+| **DoCode** | Probe failed | **300 site units (not USD)** | No check-in | [Open service / register](https://docode.cc/register?aff=zMRe) |
 | **JustDoWork** | Reachable | **≈$92** | ≈$22/day · Daily check-in | [Open service / register](https://api.justwoker.icu/sign-up?aff=VTrz) |
 | **Mirasim** | Reachable | **Go · $1/month** | Estimates per 5-hour window | [Open service / register](https://mirasim.ai/r/go-kx9cd5) |
 | **FlushAPI** | Reachable | **$22.5** | Check-in enabled; amount unpublished | [Open service / register](https://flushapi.fun/sign-up?aff=WBF3) |
 | **KKtoken AI** | Reachable | **$120** | $20/day · Daily check-in | [Open service / register](https://kktoken.cc/sign-up?aff=MzG9) |
 | **Matrix** | Reachable | **600 points** | Not publicly specified | [Open service / register](https://matrix.mzsjai.com/login?redirect=%2Fapp%2Fgrowth%3FinviteCode%3DMXMRFO52KD2_) |
 | **AnyRouter** | Reachable | **$150** | $25/day · Daily check-in | [Open service / register](https://anyrouter.top/register?aff=Z24N) |
-| **CheapCodex** | Reachable | **$40** | $20/day · Daily check-in | [Open service / register](https://api.cheapcodex.online/register?aff=U7SSQZSDB36S) |
+| **CheapCodex** | Probe failed | **$40** | $20/day · Daily check-in | [Open service / register](https://api.cheapcodex.online/register?aff=U7SSQZSDB36S) |
 | **NOFX** | Reachable | **15 points** | 5 points/day · Daily check-in | [Open service / register](https://nofx.one/zh-CN/sign-in?ref=J369GHY4) |
 
 **Indicative first-day USD credits: $1199.5 across 8 services accepting new users.**
@@ -58,7 +58,7 @@ OpenAI-compatible API service offering $100 in credits on the first day of signu
 - **Signup**: $100
 - **Daily credits**: Not publicly specified
 - **Status**: Reachable
-- **Snapshot updated**: 2026-10-08 23:23 UTC
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 
 ### Registration requirements
@@ -93,7 +93,7 @@ Free GPT 6 Astra, GPT 6 Sol and GPT-5.6 Sol with 50M tokens every week; register
 - **First-day credits / plan**: Not publicly specified
 - **Daily credits**: Not publicly specified
 - **Status**: Reachable
-- **Snapshot updated**: 2026-10-08 23:23 UTC
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 
 ### Registration requirements
@@ -128,7 +128,7 @@ Register through the Conduit Telegram bot to receive $500 in credits, with GPT-6
 - **Signup**: $500
 - **Daily credits**: Not publicly specified
 - **Status**: Reachable
-- **Snapshot updated**: 2026-10-08 23:23 UTC
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 
 ### Registration requirements
@@ -202,12 +202,13 @@ New API gateway with Claude and GPT services; bonuses use internal site units, n
 
 [Open service / register](https://docode.cc/register?aff=zMRe) · [Details](https://panxunying.github.io/ai-coding-welfare/en/sites/docode/)
 
+> Cached data: the latest probe did not obtain a fresh snapshot. Last successful snapshot: 2026-10-08 23:23 UTC.
 
 - **First-day credits / plan**: 300 site units (not USD)
 - **Signup**: 50 site units (not USD)
 - **Referral bonus**: 250 site units (not USD)
 - **Daily credits**: No check-in
-- **Status**: Reachable
+- **Status**: Probe failed
 - **Snapshot updated**: 2026-10-08 23:23 UTC
 
 
@@ -248,7 +249,7 @@ New API gateway with GitHub login, daily check-ins and image/task interfaces.
 - **Daily credits**: ≈$22/day · Daily check-in
 - **Status**: Reachable
 - **Signup**: OAuth registration only: GitHub
-- **Snapshot updated**: 2026-10-08 23:23 UTC
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 
 ### Registration requirements
@@ -283,7 +284,7 @@ Multi-agent workspace with a paid Go plan; connecting your own accounts or API k
 
 - **First-day credits / plan**: Go · $1/month
 - **Status**: Reachable
-- **Snapshot updated**: 2026-10-08 23:23 UTC
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 > Estimates per 5-hour window
 > Kimi K3: ≈130 requests
@@ -328,7 +329,7 @@ New API gateway with GitHub signup, public model pricing and separate default / 
 - **Daily credits**: Check-in enabled; amount unpublished
 - **Status**: Reachable
 - **Signup**: OAuth registration only: GitHub
-- **Snapshot updated**: 2026-10-08 23:23 UTC
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 
 ### Registration requirements
@@ -375,7 +376,7 @@ New API gateway with referral credits, daily check-ins and token-based billing.
 - **Daily credits**: $20/day · Daily check-in
 - **Status**: Reachable
 - **Signup**: OAuth registration only: GitHub
-- **Snapshot updated**: 2026-10-08 23:24 UTC
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 
 ### Registration requirements
@@ -412,7 +413,7 @@ OpenAI-compatible gateway and app store using internal points, with referral and
 - **Referral bonus**: 600 points
 - **Daily credits**: Not publicly specified
 - **Status**: Reachable
-- **Snapshot updated**: 2026-10-08 23:24 UTC
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 
 ### Registration requirements
@@ -449,7 +450,7 @@ New API gateway with signup/referral credits, daily check-ins and Anthropic/Open
 - **Referral bonus**: $50
 - **Daily credits**: $25/day · Daily check-in
 - **Status**: Reachable
-- **Snapshot updated**: 2026-10-08 23:24 UTC
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 
 ### Registration requirements
@@ -484,8 +485,8 @@ AI gateway with referral credits, daily check-ins and OpenAI, Anthropic and Resp
 - **First-day credits / plan**: $40
 - **Referral bonus**: $20
 - **Daily credits**: $20/day · Daily check-in
-- **Status**: Reachable
-- **Snapshot updated**: 2026-10-08 23:24 UTC
+- **Status**: Probe failed
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 
 ### Registration requirements
@@ -521,7 +522,7 @@ Task-based API points with passwordless login, Discord check-ins and referral re
 - **Referral bonus**: 10 points
 - **Daily credits**: 5 points/day · Daily check-in
 - **Status**: Reachable
-- **Snapshot updated**: 2026-10-08 23:24 UTC
+- **Snapshot updated**: 2026-10-09 06:14 UTC
 
 
 ### Registration requirements
